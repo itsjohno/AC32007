@@ -1,4 +1,4 @@
-<!--  Check if user is logged in, if so - redirect them to their page (main.jsp) -->
+<!--  Check if user is logged in, if so show them their settings. Otherwise, re-direct to login (login.jsp) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Welcome</title>
+    <title>myBlabby - Your Settings</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -43,9 +43,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="index.jsp">Home</a></li>
-            <li><a href="about.jsp">About</a></li>
-            <li><a href="login">Login</a></li>
+            <li><a href="index.jsp">Home</a></li>
+            <li class="active"><a href="settings.jsp">Settings</a></li>
+            <li><a href="username.jsp">YOUR USERNAME</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
