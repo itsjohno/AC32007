@@ -50,7 +50,7 @@
         </div><!--/.nav-collapse -->
       </div>
 
-      <form action="Login" class="form-signin" method="POST">
+      <form action="login" class="form-signin" method="POST">
         <h2 class="form-signin-heading">Sign in to myBlabby</h2>
         <input name="user" type="text" class="form-control" placeholder="Username" required autofocus>
         <input name="pass" type="password" class="form-control" placeholder="Password" required>
