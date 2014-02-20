@@ -45,6 +45,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.jsp">Home</a></li>
             <li class="active"><a href="about.jsp">About</a></li>
+            <li><a href="signup">Sign Up</a></li>
             <li><a href="login">Login</a></li>
           </ul>
         </div><!--/.nav-collapse -->

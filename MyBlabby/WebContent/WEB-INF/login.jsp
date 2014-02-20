@@ -45,6 +45,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.jsp">Home</a></li>
             <li><a href="about.jsp">About</a></li>
+            <li><a href="signup">Sign Up</a></li>
             <li class="active"><a href="login">Login</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -52,8 +53,17 @@
 
       <form action="login" class="form-signin" method="POST">
         <h2 class="form-signin-heading">Sign in to myBlabby</h2>
-        <input name="user" type="text" class="form-control" placeholder="Username" required autofocus>
-        <input name="pass" type="password" class="form-control" placeholder="Password" required>
+        
+       	<%
+	      if (request.getAttribute("error") != null)
+	      {
+	      %>
+	      	<div class="alert alert-danger"><%= request.getAttribute("error") %></div>
+	      <%
+	      }
+	    %>
+        <input name="user" type="text" class="form-control formTop" placeholder="Username" required autofocus>
+        <input name="pass" type="password" class="form-control formBottom" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
 

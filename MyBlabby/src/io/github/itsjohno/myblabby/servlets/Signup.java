@@ -18,22 +18,20 @@ import com.datastax.driver.core.Cluster;
 /**
  * Servlet implementation class Login
  */
-@WebServlet(name="Login", urlPatterns={"/login"})
-public class Login extends HttpServlet {
+@WebServlet(name="Signup", urlPatterns={"/signup"})
+public class Signup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Cluster cluster;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Signup() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     public void init(ServletConfig config) throws ServletException
 	{
-		// TODO Auto-generated method stub
 		cluster = Cassandra.getCluster();
 	}
 
@@ -41,7 +39,7 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/login.jsp"); 
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/signup.jsp"); 
 		rd.forward(request, response);
 	}
 
@@ -49,12 +47,11 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		UserModel um = new UserModel();
 		um.setCluster(cluster);
 		
 		request.setAttribute("error", "Incorrect username/password entered");
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/login.jsp"); 
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/signup.jsp"); 
 		rd.forward(request, response);
 	}
 

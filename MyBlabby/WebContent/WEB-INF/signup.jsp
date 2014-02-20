@@ -1,4 +1,4 @@
-<!--  Check if user is logged in, if so - redirect them to their page (main.jsp) -->
+<!--  If user is logged in, this page will re-direct them to their home (main.jsp) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,15 +43,33 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="index.jsp">Home</a></li>
+            <li><a href="index.jsp">Home</a></li>
             <li><a href="about.jsp">About</a></li>
-            <li><a href="signup">Sign Up</a></li>
+            <li class="active"><a href="signup">Sign Up</a></li>
             <li><a href="login">Login</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta condimentum risus a placerat. Sed pulvinar sed nibh vel semper. Integer in lorem tincidunt, molestie ante vitae, tempus diam. Nullam bibendum dignissim volutpat. Etiam rhoncus nunc eu metus molestie, a ultricies lacus vestibulum. Fusce et orci quis magna rhoncus ornare. Duis eu arcu ante. Nunc porta lorem vel vulputate tincidunt. Quisque lacinia tortor non justo ullamcorper, in dictum justo fringilla. Cras volutpat, magna vitae egestas molestie, urna erat convallis arcu, eu imperdiet magna nisl ullamcorper tellus. Mauris suscipit mattis velit eu porta. Ut convallis risus neque, eget placerat ligula fermentum at.</p>
+      <form action="login" class="form-signin" method="POST">
+        <h2 class="form-signin-heading">Sign up to myBlabby</h2>
+        
+        <%
+	      if (request.getAttribute("error") != null)
+	      {
+	      %>
+	      	<div class="alert alert-danger"><%= request.getAttribute("error") %></div>
+	      <%
+	      }
+	    %>
+        
+        <input name="user" type="text" class="form-control formTop" placeholder="Username" required autofocus>
+        <input name="pass" type="password" class="form-control formMiddle" placeholder="Password" required>
+        <input name="pass-confirm" type="password" class="form-control formMiddle" placeholder="Confirm Password" required>
+        <input name="email" type="email" class="form-control formBottom" placeholder="E-Mail Address" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+      </form>
+
     </div> <!-- /container -->
 
 

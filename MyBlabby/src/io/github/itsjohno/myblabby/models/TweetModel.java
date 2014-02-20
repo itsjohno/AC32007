@@ -24,6 +24,7 @@ import io.github.itsjohno.myblabby.stores.TweetStore;
 public class TweetModel
 {
 	Cluster cluster;
+	
 	public TweetModel(){
 		
 	}
