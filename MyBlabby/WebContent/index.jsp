@@ -50,7 +50,7 @@
           </ul>
         </div><!--/.nav-collapse -->
       </div>
-
+	  <h1>Welcome to <span class="muted">myBlabby</span></h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta condimentum risus a placerat. Sed pulvinar sed nibh vel semper. Integer in lorem tincidunt, molestie ante vitae, tempus diam. Nullam bibendum dignissim volutpat. Etiam rhoncus nunc eu metus molestie, a ultricies lacus vestibulum. Fusce et orci quis magna rhoncus ornare. Duis eu arcu ante. Nunc porta lorem vel vulputate tincidunt. Quisque lacinia tortor non justo ullamcorper, in dictum justo fringilla. Cras volutpat, magna vitae egestas molestie, urna erat convallis arcu, eu imperdiet magna nisl ullamcorper tellus. Mauris suscipit mattis velit eu porta. Ut convallis risus neque, eget placerat ligula fermentum at.</p>
     </div> <!-- /container -->
 

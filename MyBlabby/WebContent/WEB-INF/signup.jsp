@@ -9,7 +9,7 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Welcome</title>
+    <title>myBlabby - Sign Up</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -51,7 +51,7 @@
         </div><!--/.nav-collapse -->
       </div>
 
-      <form action="login" class="form-signin" method="POST">
+      <form action="signup" class="form-signin" method="POST">
         <h2 class="form-signin-heading">Sign up to myBlabby</h2>
         
         <%

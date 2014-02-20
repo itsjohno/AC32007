@@ -22,5 +22,6 @@
 			<attribute name="javadoc_location" value="http://www.datastax.com/drivers/java/2.0/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/uuid-3.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
