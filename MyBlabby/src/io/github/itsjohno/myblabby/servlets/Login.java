@@ -1,7 +1,6 @@
 package io.github.itsjohno.myblabby.servlets;
 
-import io.github.itsjohno.myblabby.libraries.Cassandra;
-import io.github.itsjohno.myblabby.libraries.Conversion;
+import io.github.itsjohno.myblabby.libraries.*;
 import io.github.itsjohno.myblabby.models.UserModel;
 import io.github.itsjohno.myblabby.stores.UserStore;
 
@@ -63,7 +62,7 @@ public class Login extends HttpServlet {
 		try
 		{
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			String password = Conversion.byteArrayToString(digest.digest(request.getParameter("pass").getBytes("UTF-8")));
+			String password = Helper.byteArrayToString(digest.digest(request.getParameter("pass").getBytes("UTF-8")));
 			us = um.verifyUser(request.getParameter("user"), password);
 		}
 		catch (NoSuchAlgorithmException e)

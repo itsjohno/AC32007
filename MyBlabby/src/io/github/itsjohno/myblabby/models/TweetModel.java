@@ -25,7 +25,8 @@ public class TweetModel
 {
 	Cluster cluster;
 	
-	public TweetModel(){
+	public TweetModel()
+	{
 		
 	}
 

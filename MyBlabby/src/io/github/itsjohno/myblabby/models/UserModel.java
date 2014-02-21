@@ -23,7 +23,9 @@ public class UserModel
 	 */
 	public UserStore createUser(String username, String password, String email)
 	{
-		java.util.UUID uuid = Conversion.getTimeUUID();
+		UserStore us = null;
+		
+		java.util.UUID uuid = Helper.getTimeUUID();
 		
 		Session session = cluster.connect("blabby");
 		PreparedStatement statement = session.prepare("INSERT INTO users (uuid, username, password, email, created) VALUES (?, ?, ?, ?, dateof(now()))");
@@ -33,15 +35,12 @@ public class UserModel
 		
 		if (checkForUser(username))
 		{
-			UserStore us = new UserStore();
+			us = new UserStore();
 			us.setUsername(username);
 			us.setUUID(uuid);
-			return us;
 		}
-		else
-		{
-			return null;
-		}
+		
+		return us;
 	}
 	
 	/**
@@ -79,7 +78,7 @@ public class UserModel
 		boolean found = false;
 		
 		Session session = cluster.connect("blabby");
-		PreparedStatement statement = session.prepare("SELECT username FROM users WHERE username = ? AND password = ?");
+		PreparedStatement statement = session.prepare("SELECT username FROM users WHERE username = ?");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		
 		ResultSet rs = session.execute(boundStatement.bind(username));
