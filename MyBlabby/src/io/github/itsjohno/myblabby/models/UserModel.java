@@ -1,10 +1,5 @@
 package io.github.itsjohno.myblabby.models;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-
 import com.datastax.driver.core.*;
 
 import io.github.itsjohno.myblabby.libraries.*;
@@ -29,7 +24,7 @@ public class UserModel
 	public UserStore createUser(String username, String password, String email)
 	{
 		Session session = cluster.connect("blabby");
-		PreparedStatement statement = session.prepare("INSERT INTO users (uuid, username, password, email, created, last_login) VALUES (?, ?, ?, ?, dateof(now()), dateof(now()))");
+		PreparedStatement statement = session.prepare("INSERT INTO users (uuid, username, password, email, created) VALUES (?, ?, ?, ?, dateof(now()))");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		
 		session.execute(boundStatement.bind(Conversion.getTimeUUID(), username, password, email));
@@ -47,13 +42,33 @@ public class UserModel
 	}
 	
 	/**
-	 * Logs in the specified user, returns the user store of the user to be logged in. Null if incorrect details
+	 * Verify's login credentials of the specified user, returns the user store of the user to be logged in. Null if incorrect details
 	 * are supplied.
-	 * @return User store of logged in user.
+	 * @return User store of user to be logged in.
 	 */
-	public UserStore loginUser()
+	public UserStore verifyUser(String username, String password)
 	{
-		return null;
+		UserStore us = null;
+		
+		Session session = cluster.connect("blabby");
+		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE username = ?");
+		BoundStatement boundStatement = new BoundStatement(statement);
+		
+		ResultSet rs = session.execute(boundStatement.bind(username));
+		
+		if (!rs.isExhausted())
+		{
+			Row row = rs.one();
+			
+			if (row.getString("password").equalsIgnoreCase(password))
+			{
+				us = new UserStore();
+				us.setUsername(row.getString("username"));
+				us.setUUID(row.getUUID("uuid"));
+			}
+		}
+		
+		return us;
 	}
 	
 	public boolean checkForUser(String username)
@@ -61,7 +76,7 @@ public class UserModel
 		boolean found = false;
 		
 		Session session = cluster.connect("blabby");
-		PreparedStatement statement = session.prepare("SELECT username FROM users WHERE username = ?");
+		PreparedStatement statement = session.prepare("SELECT username FROM users WHERE username = ? AND password = ?");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		
 		ResultSet rs = session.execute(boundStatement.bind(username));

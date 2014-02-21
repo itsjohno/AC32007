@@ -16,4 +16,14 @@ public class UserStore
 	{
 		this.username = username;
 	}
+	
+	public UUID getUUID()
+	{
+		return uuid;
+	}
+	
+	public void setUUID(UUID uuid)
+	{
+		this.uuid = uuid;
+	}
 }

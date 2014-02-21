@@ -39,11 +39,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.jsp">American Automotive</a>
+          <a class="navbar-brand" href="/">American Automotive</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="index.jsp">Home</a></li>
+            <li class="active"><a href="/">Home</a></li>
             <li><a href="settings.jsp">Settings</a></li>
             <li><a href="username.jsp">DISPLAY USERNAME</a></li>
           </ul>

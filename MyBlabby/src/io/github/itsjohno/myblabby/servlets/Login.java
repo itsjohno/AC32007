@@ -1,9 +1,13 @@
 package io.github.itsjohno.myblabby.servlets;
 
 import io.github.itsjohno.myblabby.libraries.Cassandra;
+import io.github.itsjohno.myblabby.libraries.Conversion;
 import io.github.itsjohno.myblabby.models.UserModel;
+import io.github.itsjohno.myblabby.stores.UserStore;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -48,13 +52,38 @@ public class Login extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		UserModel um = new UserModel();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		UserModel um = new UserModel();	
+		UserStore us = null;
+		RequestDispatcher rd;
+		
 		um.setCluster(cluster);
 		
-		request.setAttribute("error", "Incorrect username/password entered");
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/login.jsp"); 
+		try
+		{
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			String password = Conversion.byteArrayToString(digest.digest(request.getParameter("pass").getBytes("UTF-8")));
+			us = um.verifyUser(request.getParameter("user"), password);
+		}
+		catch (NoSuchAlgorithmException e)
+		{ 
+			request.setAttribute("error", "NoSuchAlgo. Please <a href=\"contact.jsp\">contact us</a> if this error persists");
+			rd = request.getRequestDispatcher("WEB-INF/login.jsp"); 
+		}
+		
+		if (us == null)
+		{
+			request.setAttribute("error", "Incorrect username/password entered.");
+			rd = request.getRequestDispatcher("WEB-INF/login.jsp"); 
+		}
+		else
+		{
+			// TODO Sign in the user here!
+			request.setAttribute("error", "Logging in user: " + us.getUsername() + " / " + us.getUUID().toString());
+			rd = request.getRequestDispatcher("WEB-INF/login.jsp"); 
+		}
+		
 		rd.forward(request, response);
 	}
 

@@ -6,7 +6,6 @@ import io.github.itsjohno.myblabby.models.*;
 import io.github.itsjohno.myblabby.stores.UserStore;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -98,6 +97,7 @@ public class Signup extends HttpServlet {
 				}
 				else
 				{
+					// TODO Sign in the user here!
 					request.setAttribute("error", "User Created!: " + us.getUsername());
 					rd = request.getRequestDispatcher("WEB-INF/signup.jsp"); 
 				}
