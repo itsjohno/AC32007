@@ -98,7 +98,9 @@ public class Signup extends HttpServlet {
 				else
 				{
 					// TODO Sign in the user here!
-					request.setAttribute("error", "User Created!: " + us.getUsername());
+					// We have the User Store here, so we need to use it.
+					
+					request.setAttribute("error", "User Created!: " + us.getUsername() + " / " + us.getUUID().toString());
 					rd = request.getRequestDispatcher("WEB-INF/signup.jsp"); 
 				}
 			}

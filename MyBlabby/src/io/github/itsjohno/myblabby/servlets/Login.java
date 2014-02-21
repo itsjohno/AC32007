@@ -80,6 +80,8 @@ public class Login extends HttpServlet {
 		else
 		{
 			// TODO Sign in the user here!
+			// We have the user store here, so we need to use it
+			
 			request.setAttribute("error", "Logging in user: " + us.getUsername() + " / " + us.getUUID().toString());
 			rd = request.getRequestDispatcher("WEB-INF/login.jsp"); 
 		}

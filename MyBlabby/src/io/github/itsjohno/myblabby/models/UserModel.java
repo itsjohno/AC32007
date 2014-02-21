@@ -23,16 +23,19 @@ public class UserModel
 	 */
 	public UserStore createUser(String username, String password, String email)
 	{
+		java.util.UUID uuid = Conversion.getTimeUUID();
+		
 		Session session = cluster.connect("blabby");
 		PreparedStatement statement = session.prepare("INSERT INTO users (uuid, username, password, email, created) VALUES (?, ?, ?, ?, dateof(now()))");
 		BoundStatement boundStatement = new BoundStatement(statement);
 		
-		session.execute(boundStatement.bind(Conversion.getTimeUUID(), username, password, email));
+		session.execute(boundStatement.bind(uuid, username, password, email));
 		
 		if (checkForUser(username))
 		{
 			UserStore us = new UserStore();
 			us.setUsername(username);
+			us.setUUID(uuid);
 			return us;
 		}
 		else
