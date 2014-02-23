@@ -1,6 +1,6 @@
 package io.github.itsjohno.myblabby.servlets;
 
-import io.github.itsjohno.myblabby.libraries.*;
+import io.github.itsjohno.myblabby.lib.*;
 import io.github.itsjohno.myblabby.models.*;
 import io.github.itsjohno.myblabby.stores.UserStore;
 
@@ -24,7 +24,6 @@ import com.datastax.driver.core.Cluster;
 @WebServlet(name="Signup", urlPatterns={"/signup"})
 public class Signup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Cluster cluster;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,7 +34,6 @@ public class Signup extends HttpServlet {
     
     public void init(ServletConfig config) throws ServletException
 	{
-		cluster = Cassandra.getCluster();
 	}
 
 	/**
@@ -66,7 +64,6 @@ public class Signup extends HttpServlet {
 		else
 		{
 			UserModel um = new UserModel();
-			um.setCluster(cluster);
 			
 			// Check that username is not already taken.
 			if (um.checkForUser(request.getParameter("user")))

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/aopalliance-repackaged-2.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/asm-all-repackaged-2.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/cassandra-driver-core-2.0.0-rc3-SNAPSHOT.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.datastax.com/drivers/java/2.0/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/hk2-api-2.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/hk2-locator-2.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/hk2-utils-2.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jackson-annotations-2.3.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jackson-core-2.3.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jackson-databind-2.3.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/javax.inject-2.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/javax.ws.rs-api-2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jaxb-api-2.2.7.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jersey-client.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jersey-common.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jersey-container-servlet.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jersey-guava-2.6.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/jersey-server.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/metrics-core-3.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/org.osgi.core-4.2.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/persistence-api-1.0.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/twilio-java-sdk-3.3.16-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/uuid-3.4.jar"/>
+	<classpathentry kind="lib" path="F:/Dropbox/University/3rd Year/Semester Two/AC32007/libraries/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

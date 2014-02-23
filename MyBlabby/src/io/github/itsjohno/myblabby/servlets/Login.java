@@ -1,6 +1,6 @@
 package io.github.itsjohno.myblabby.servlets;
 
-import io.github.itsjohno.myblabby.libraries.*;
+import io.github.itsjohno.myblabby.lib.*;
 import io.github.itsjohno.myblabby.models.UserModel;
 import io.github.itsjohno.myblabby.stores.UserStore;
 
@@ -24,7 +24,6 @@ import com.datastax.driver.core.Cluster;
 @WebServlet(name="Login", urlPatterns={"/login"})
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Cluster cluster;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,7 +36,6 @@ public class Login extends HttpServlet {
     public void init(ServletConfig config) throws ServletException
 	{
 		// TODO Auto-generated method stub
-		cluster = Cassandra.getCluster();
 	}
 
 	/**
@@ -56,8 +54,6 @@ public class Login extends HttpServlet {
 		UserModel um = new UserModel();	
 		UserStore us = null;
 		RequestDispatcher rd;
-		
-		um.setCluster(cluster);
 		
 		try
 		{

@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 
 import com.datastax.driver.core.Cluster;
 
-import io.github.itsjohno.myblabby.libraries.*;
+import io.github.itsjohno.myblabby.lib.*;
 import io.github.itsjohno.myblabby.models.*;
 import io.github.itsjohno.myblabby.stores.*;
  
@@ -17,7 +17,6 @@ import io.github.itsjohno.myblabby.stores.*;
 public class Tweet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private Cluster cluster;
 	
 	public Tweet()
 	{
@@ -27,13 +26,11 @@ public class Tweet extends HttpServlet
 	public void init(ServletConfig config) throws ServletException
 	{
 		// TODO Auto-generated method stub
-		cluster = Cassandra.getCluster();
 	}
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	TweetModel tm = new TweetModel();
-		tm.setCluster(cluster);
 		response.getWriter().println("Something's going wrong");
 		LinkedList<TweetStore> tweetList = tm.getTweets();
 		request.setAttribute("Tweets", tweetList); //Set a bean with the list in it

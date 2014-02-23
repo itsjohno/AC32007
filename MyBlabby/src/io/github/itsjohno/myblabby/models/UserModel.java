@@ -2,19 +2,13 @@ package io.github.itsjohno.myblabby.models;
 
 import com.datastax.driver.core.*;
 
-import io.github.itsjohno.myblabby.libraries.*;
+import io.github.itsjohno.myblabby.lib.*;
 import io.github.itsjohno.myblabby.stores.UserStore;
 
 public class UserModel
-{
-	Cluster cluster;
-	
+{	
 	public UserModel()
 	{ }
-	
-	public void setCluster(Cluster cluster){
-		this.cluster=cluster;
-	}
 	
 	/**
 	 * Creates a new user within the Cassandra DB. Returns the UserStore of the user that has just been created
@@ -27,11 +21,8 @@ public class UserModel
 		
 		java.util.UUID uuid = Helper.getTimeUUID();
 		
-		Session session = cluster.connect("blabby");
-		PreparedStatement statement = session.prepare("INSERT INTO users (uuid, username, password, email, created) VALUES (?, ?, ?, ?, dateof(now()))");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		
-		session.execute(boundStatement.bind(uuid, username, password, email));
+		BoundStatement boundStatement = Cassandra.createBoundStatement("INSERT INTO users (uuid, username, password, email, created) VALUES (?, ?, ?, ?, dateof(now()))");	
+		Cassandra.getSession().execute(boundStatement.bind(uuid, username, password, email));
 		
 		if (checkForUser(username))
 		{
@@ -52,11 +43,8 @@ public class UserModel
 	{
 		UserStore us = null;
 		
-		Session session = cluster.connect("blabby");
-		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE username = ?");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		
-		ResultSet rs = session.execute(boundStatement.bind(username));
+		BoundStatement boundStatement = Cassandra.createBoundStatement("SELECT * FROM users WHERE username = ?");	
+		ResultSet rs = Cassandra.getSession().execute(boundStatement.bind(username));
 		
 		if (!rs.isExhausted())
 		{
@@ -77,11 +65,8 @@ public class UserModel
 	{
 		boolean found = false;
 		
-		Session session = cluster.connect("blabby");
-		PreparedStatement statement = session.prepare("SELECT username FROM users WHERE username = ?");
-		BoundStatement boundStatement = new BoundStatement(statement);
-		
-		ResultSet rs = session.execute(boundStatement.bind(username));
+		BoundStatement boundStatement = Cassandra.createBoundStatement("SELECT username FROM users WHERE username = ?");	
+		ResultSet rs = Cassandra.getSession().execute(boundStatement.bind(username));
 		
 		if (!rs.all().isEmpty())
 		{
