@@ -1,11 +1,13 @@
 package io.github.itsjohno.blabby.dao;
 
+import java.util.LinkedList;
 import java.util.UUID;
 
 import com.datastax.driver.core.*;
 
 import io.github.itsjohno.blabby.libraries.Cassandra;
 import io.github.itsjohno.blabby.stores.TweetStore;
+import io.github.itsjohno.blabby.stores.UserStore;
 
 /**
  * Tweet DAO implements CRUD for the TweetModel
@@ -37,7 +39,7 @@ public class TweetDAO
 	}
 	
 	/**
-	 * Performs the R(etrieve) of CRUD. Retrieves a Tweet from the Database
+	 * Performs the R(etrieve) of CRUD. Retrieves a single Tweet from the Database
 	 * @param uuid of the tweet to be retrieved
 	 * @return TweetStore containing retrieved tweet
 	 */
@@ -63,6 +65,39 @@ public class TweetDAO
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public LinkedList<TweetStore> retrieve(UserStore user)
+	{
+		LinkedList<TweetStore> tweetList = new LinkedList<TweetStore>();
+		
+		try
+		{
+			BoundStatement boundStatement = Cassandra.createBoundStatement("SELECT * FROM tweets WHERE username = ?");	
+			ResultSet rs = Cassandra.getSession().execute(boundStatement.bind(user.getUsername()));
+			
+			if (rs.isExhausted())
+			{
+				System.out.println("No Tweets returned");
+			} 
+			else 
+			{
+				for (Row row : rs) 
+				{
+					TweetStore ts = new TweetStore();
+					ts.setTweet(row.getString("tweet"));
+					ts.setUsername(row.getString("username"));
+					ts.setUUID(row.getUUID("interaction_time"));
+					tweetList.add(ts);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return tweetList;
 	}
 	
 	/**

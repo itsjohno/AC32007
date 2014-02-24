@@ -1,4 +1,4 @@
-<!--  If user is logged in, this page will re-direct them to their home (main.jsp) -->
+<!--  Check if user is logged in, if so - redirect them to their page (main.jsp) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Login</title>
+    <title>myBlabby - Main Page</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -28,10 +28,9 @@
 	  </head>
 	<body>
 
-    <div class="container">
-
-      <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -39,35 +38,27 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">myBlabby</a>
+          <a class="navbar-brand" href="index.jsp">MyBlabby</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">Home</a></li>
-            <li><a href="about.jsp">About</a></li>
-            <li><a href="signup">Sign Up</a></li>
-            <li class="active"><a href="login">Login</a></li>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="main.jsp">Home</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
+    </div>
 
-      <form action="login" class="form-signin" method="POST">
-        <h2 class="form-signin-heading">Sign in to myBlabby</h2>
-        
-       	<%
-	      if (request.getAttribute("error") != null)
-	      {
-	      %>
-	      	<div class="alert alert-danger"><%= request.getAttribute("error") %></div>
-	      <%
-	      }
-	    %>
-        <input name="user" type="text" class="form-control formTop" placeholder="Username" required autofocus>
-        <input name="pass" type="password" class="form-control formBottom" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-
-    </div> <!-- /container -->
+    <!-- Begin page content -->
+    <div class="container">
+    		<div class="page-header">
+		        <h1>Welcome Back <% user.getUsername(); %></h1>
+		    </div>
+    </div>
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted">MyBlabby</p>
+      </div>
+    </div>
 
 
     <!-- Bootstrap core JavaScript

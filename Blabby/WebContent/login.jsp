@@ -1,4 +1,4 @@
-<!--  This is a user's personal page, visible to all. Show's tweets from a specified user (user.jsp) -->
+<!--  Check if user is logged in, if so - redirect them to their page (main.jsp) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - USERNAME</title>
+    <title>myBlabby - Login</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -28,11 +28,9 @@
 	  </head>
 	<body>
 
-    <div class="container">
-
-      <!-- Static navbar -->
-      <!-- One navigation for Logged in users, another for others -->
-      <div class="navbar navbar-default" role="navigation">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -40,19 +38,34 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href=/">American Automotive</a>
+          <a class="navbar-brand" href="index.jsp">MyBlabby</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">Home</a></li>
-            <li><a href="settings.jsp">Settings</a></li>
-            <li><a href="username.jsp">YOUR USERNAME</a></li>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.jsp">Home</a></li>
+            <li class="active"><a href="login.jsp">Login</a></li>
+            <li><a href="signup.jsp">Signup</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
+    </div>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus porta condimentum risus a placerat. Sed pulvinar sed nibh vel semper. Integer in lorem tincidunt, molestie ante vitae, tempus diam. Nullam bibendum dignissim volutpat. Etiam rhoncus nunc eu metus molestie, a ultricies lacus vestibulum. Fusce et orci quis magna rhoncus ornare. Duis eu arcu ante. Nunc porta lorem vel vulputate tincidunt. Quisque lacinia tortor non justo ullamcorper, in dictum justo fringilla. Cras volutpat, magna vitae egestas molestie, urna erat convallis arcu, eu imperdiet magna nisl ullamcorper tellus. Mauris suscipit mattis velit eu porta. Ut convallis risus neque, eget placerat ligula fermentum at.</p>
-    </div> <!-- /container -->
+    <!-- Begin page content -->
+    <div class="container">
+	  <div class="page-header">
+        <h1>Log in to myBlabby</h1>
+      </div>
+      <form action="/user/login" class="form-signin" method="POST">
+        <input name="username" type="text" class="form-control formTop" placeholder="Username" required autofocus>
+        <input name="password" type="password" class="form-control formBottom" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+    </div>
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted">MyBlabby</p>
+      </div>
+    </div>
 
 
     <!-- Bootstrap core JavaScript

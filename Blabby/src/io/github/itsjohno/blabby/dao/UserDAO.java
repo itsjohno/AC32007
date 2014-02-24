@@ -1,7 +1,6 @@
 package io.github.itsjohno.blabby.dao;
 
 import io.github.itsjohno.blabby.libraries.Cassandra;
-import io.github.itsjohno.blabby.stores.TweetStore;
 import io.github.itsjohno.blabby.stores.UserStore;
 
 import java.util.UUID;
@@ -21,8 +20,8 @@ public class UserDAO
 	{
 		try
 		{
-			BoundStatement boundStatement = Cassandra.createBoundStatement("INSERT INTO users (uuid, username, email, password) VALUES (?, ?, ?, ?)");	
-			Cassandra.getSession().execute(boundStatement.bind(user.getUUID(), user.getUsername(), user.getEmail(), user.getPassword()));
+			BoundStatement boundStatement = Cassandra.createBoundStatement("INSERT INTO users (uuid, username, email, password, sessionid) VALUES (?, ?, ?, ?, ?)");	
+			Cassandra.getSession().execute(boundStatement.bind(user.getUUID(), user.getUsername(), user.getEmail(), user.getPassword(), user.getSessionID()));
 			
 			return true;
 		}
@@ -48,7 +47,7 @@ public class UserDAO
 			Row row = rs.one();
 			if (row != null)
 			{
-				return new UserStore(row.getUUID("uuid"), row.getString("username"), row.getString("password"), row.getString("email"));
+				return new UserStore(row.getUUID("uuid"), row.getString("username"), row.getString("password"), row.getString("email"), row.getString("sessionid"));
 			}
 			else
 			{
@@ -77,7 +76,7 @@ public class UserDAO
 			Row row = rs.one();
 			if (row != null)
 			{
-				user.populate(row.getUUID("uuid"), row.getString("username"), row.getString("password"), row.getString("email"));
+				user.populate(row.getUUID("uuid"), row.getString("username"), row.getString("password"), row.getString("email"), row.getString("sessionid"));
 				return user;
 			}
 			else
@@ -97,27 +96,48 @@ public class UserDAO
 	 * @param UUID of user to be fetched
 	 * @return UserStore of the user to be retrieved
 	 */
-	public void retrive()
+	public UserStore retrive(UUID uuid)
 	{
-
+		try
+		{
+			BoundStatement boundStatement = Cassandra.createBoundStatement("SELECT * FROM users WHERE uuid = ? LIMIT 1 ALLOW FILTERING");	
+			ResultSet rs = Cassandra.getSession().execute(boundStatement.bind(uuid));
+			
+			Row row = rs.one();
+			if (row != null)
+			{
+				return new UserStore(row.getUUID("uuid"), row.getString("username"), row.getString("password"), row.getString("email"), row.getString("sessionid"));
+			}
+			else
+			{
+				return null;
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
 	 * Performs the U(pdate) of CRUD. Updates a User in the Database
 	 * @param UserStore containing updated user details
 	 */
-	public void update()
+	public void update(UserStore user)
 	{
-
+		BoundStatement boundStatement = Cassandra.createBoundStatement("UPDATE users SET username = ?, password = ?, email = ?, sessionid = ? WHERE uuid = ?");	
+		Cassandra.getSession().execute(boundStatement.bind(user.getUsername(), user.getPassword(), user.getEmail(), user.getSessionID(), user.getUUID()));
 	}
 	
 	/**
 	 * Performs the D(elete) of CRUD. Deletes a User from the Database
 	 * @param uuid of the user to be deleted
 	 */
-	public void delete()
+	public void delete(UserStore user)
 	{
-
+		BoundStatement boundStatement = Cassandra.createBoundStatement("DELETE FROM users WHERE uuid = ?");	
+		Cassandra.getSession().execute(boundStatement.bind(user.getUUID()));
 	}
 
 }

@@ -12,6 +12,7 @@ public class UserStore
 	String username;
 	String password;
 	String email;
+	String sessionid;
 	
 	//================================================================================
     // Constructors
@@ -20,24 +21,26 @@ public class UserStore
 	public UserStore()
 	{ }
 	
-	public UserStore(UUID uuid, String username, String password, String email)
+	public UserStore(UUID uuid, String username, String password, String email, String sessionid)
 	{
 		this.uuid = uuid;
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.sessionid = sessionid;
 	}
 	
 	//================================================================================
     // Accessors
     //================================================================================
 	
-	public void populate(UUID uuid, String username, String password, String email)
+	public void populate(UUID uuid, String username, String password, String email, String sessionid)
 	{
 		this.uuid = uuid;
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.sessionid = sessionid;
 	}
 	
 	public void setUUID(UUID uuid)
@@ -78,5 +81,15 @@ public class UserStore
 	public String getEmail()
 	{
 		return this.email;
+	}
+	
+	public void setSessionID(String sessionid)
+	{
+		this.sessionid = sessionid;
+	}
+	
+	public String getSessionID()
+	{
+		return this.sessionid;
 	}
 }

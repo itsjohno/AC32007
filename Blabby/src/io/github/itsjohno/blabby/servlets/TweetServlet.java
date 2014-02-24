@@ -2,11 +2,15 @@ package io.github.itsjohno.blabby.servlets;
 
 import io.github.itsjohno.blabby.libraries.*;
 import io.github.itsjohno.blabby.dao.TweetDAO;
+import io.github.itsjohno.blabby.dao.UserDAO;
 import io.github.itsjohno.blabby.stores.TweetStore;
+import io.github.itsjohno.blabby.stores.UserStore;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -14,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class TweetServlet
@@ -33,9 +38,27 @@ public class TweetServlet extends HttpServlet
 		
 		if (urlArgs.length == 1)
 		{
-			TweetDAO tDAO = new TweetDAO();
+			HttpSession session = request.getSession();
 			
-			request.getParameter("message");
+			TweetDAO tDAO = new TweetDAO();
+			UserStore user = (UserStore)session.getAttribute("user");
+			
+			if (user != null)
+			{
+				if (request.getParameter("message") != null)
+				{
+					tDAO.create(new TweetStore(user.getUsername(), request.getParameter("message"), Helper.getTimeUUID()));
+					response.sendError(HttpServletResponse.SC_ACCEPTED);
+				}
+				else
+				{
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Required field left empty");
+				}
+			}
+			else
+			{
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			}
 		}
 		else
 		{
@@ -45,35 +68,80 @@ public class TweetServlet extends HttpServlet
     
 	/**
 	 * Read
+	 * Get a Tweet from the Database
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String[] urlArgs = Helper.SplitRequestPath(request);
+		UserDAO uDAO = new UserDAO();
 		
-		if (urlArgs.length > 1)
+		if (urlArgs.length == 2)
 		{
-			System.out.println("Retrieve Tweet: " + urlArgs[1]);
-		
-			try
+			UserStore user = new UserStore(null, urlArgs[1], null, null, null);
+			if (uDAO.retrieve(user) == null)
 			{
-				TweetDAO tDAO = new TweetDAO();
-				TweetStore tweet = tDAO.retrieve(UUID.fromString(urlArgs[1]));
-				
-				if (tweet == null)
+				// Looks like we're trying to get a Tweet by UUID
+				System.out.println("Retrieve Tweet: " + urlArgs[1]);
+			
+				try
 				{
-					response.sendError(HttpServletResponse.SC_NOT_FOUND);
+					TweetDAO tDAO = new TweetDAO();
+					TweetStore tweet = tDAO.retrieve(UUID.fromString(urlArgs[1]));
+					
+					if (tweet == null)
+					{
+						response.sendError(HttpServletResponse.SC_NOT_FOUND);
+					}
+					else
+					{  
+						response.setStatus(HttpServletResponse.SC_OK);
+						response.setContentType("application/json");
+						response.getOutputStream().print(PojoMapper.toJson(tweet, true));
+					}
 				}
-				else
+				catch (Exception e)
 				{
-					response.setStatus(HttpServletResponse.SC_OK);
-					response.setContentType("application/json");
-					response.getOutputStream().print(PojoMapper.toJson(tweet, true));
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					e.printStackTrace();
 				}
 			}
-			catch (Exception e)
+			else
 			{
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				e.printStackTrace();
+				// Trying to get a Tweet by username are we?
+				try
+				{
+					TweetDAO tDAO = new TweetDAO();
+					LinkedList<TweetStore> tweetList = tDAO.retrieve(user);
+					
+					if (tweetList.peekFirst() == null)
+					{
+						response.sendError(HttpServletResponse.SC_NOT_FOUND);
+					}
+					else
+					{
+						Iterator<TweetStore> iterator;
+						iterator = tweetList.iterator();  
+						
+						response.setStatus(HttpServletResponse.SC_OK);
+						response.setContentType("application/json");
+						response.getOutputStream().print("\"tweets\": [\n");
+						while (iterator.hasNext())
+						{
+							response.getOutputStream().print(PojoMapper.toJson((TweetStore)iterator.next(), true));
+							if (iterator.hasNext())
+							{
+								response.getOutputStream().print(",");
+							}
+							response.getOutputStream().print("\n");
+						}
+						response.getOutputStream().print("]");
+					}
+				}
+				catch (Exception e)
+				{
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					e.printStackTrace();
+				}
 			}
 		}
 		else
@@ -83,6 +151,7 @@ public class TweetServlet extends HttpServlet
 	}
 	
 	/**
+	 * Update
 	 * It's not possible to perform an UPDATE (PUT) on a Tweet, so send a 405 Error.
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -92,12 +161,13 @@ public class TweetServlet extends HttpServlet
 
 	/**
 	 * Delete
+	 * Delete a Tweet from the Database
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String[] urlArgs = Helper.SplitRequestPath(request);
 		
-		if (urlArgs.length > 1)
+		if (urlArgs.length == 2)
 		{
 			System.out.println("Retrieve Tweet: " + urlArgs[1]);
 		
@@ -112,9 +182,18 @@ public class TweetServlet extends HttpServlet
 				}
 				else
 				{
-					System.out.println("Delete Tweet: " + tweet.getUUID().toString());
-					tDAO.delete(tweet);
-					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+					HttpSession session = request.getSession();
+					UserStore user = (UserStore)session.getAttribute("user");
+					
+					if (user != null && user.getUsername().equalsIgnoreCase(tweet.getUsername()))
+					{
+						tDAO.delete(tweet);
+						response.sendError(HttpServletResponse.SC_NO_CONTENT);
+					}
+					else
+					{
+						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You are not authorized to delete this tweet");
+					}
 				}
 			}
 			catch (Exception e)
