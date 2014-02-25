@@ -100,6 +100,39 @@ public class TweetDAO
 		return tweetList;
 	}
 	
+	public LinkedList<TweetStore> retrieve()
+	{
+		LinkedList<TweetStore> tweetList = new LinkedList<TweetStore>();
+		
+		try
+		{
+			BoundStatement boundStatement = Cassandra.createBoundStatement("SELECT * FROM tweets");	
+			ResultSet rs = Cassandra.getSession().execute(boundStatement);
+			
+			if (rs.isExhausted())
+			{
+				System.out.println("No Tweets returned");
+			} 
+			else 
+			{
+				for (Row row : rs) 
+				{
+					TweetStore ts = new TweetStore();
+					ts.setTweet(row.getString("tweet"));
+					ts.setUsername(row.getString("username"));
+					ts.setUUID(row.getUUID("interaction_time"));
+					tweetList.add(ts);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return tweetList;
+	}
+	
 	/**
 	 * Performs the D(elete) of CRUD. Deletes a Tweet from the Database
 	 * @param uuid of the tweet to be deleted

@@ -1,6 +1,9 @@
 <!--  Check if user is logged in, if so - redirect them to their page (main.jsp) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="io.github.itsjohno.blabby.stores.UserStore" %>
+<%@ page import="java.util.*" %>
+<%@ page import="io.github.itsjohno.blabby.stores.TweetStore" %>
+<%@ page import="io.github.itsjohno.blabby.libraries.Helper" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -67,14 +70,14 @@
 		        %>
 		    </div>
 		    <div class="row">
-		        <div class="col-md-5">
-		            <form>
-		            <textarea class="tweetBox form-control" rows="3">What's on your mind?</textarea>
+		        <div class="col-md-4">
+		            <form method="POST" id="tweetForm">
+		            <textarea name="tweetBox" id="tweetBox" class="tweetBox form-control" maxlength="140" rows="3" placeholder="What's on your mind?"></textarea>
 		            <button class="btn btn-lg btn-primary btn-block" type="submit">Tweet</button>
 		            </form>
 		        </div>
-		        <div class="col-md-5">
-		            Body content
+		        <div id="tweets" class="col-md-5">
+
 		        </div>
 	    	</div>
     </div>
@@ -90,5 +93,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://blabby.cloudapp.net:8080/js/main.js"></script>
   </body>
 </html>

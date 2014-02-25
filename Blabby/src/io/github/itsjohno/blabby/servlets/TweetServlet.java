@@ -162,7 +162,26 @@ public class TweetServlet extends HttpServlet
 		}
 		else
 		{
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			// Just trying to get all tweets?
+			try
+			{
+				TweetDAO tDAO = new TweetDAO();
+				LinkedList<TweetStore> tweetList = tDAO.retrieve();
+				
+				if (tweetList.peekFirst() == null)
+				{
+					response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				}
+				else
+				{
+					// We're wanting to get tweets for all users.
+				}
+			}
+			catch (Exception e)
+			{
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				e.printStackTrace();
+			}
 		}
 	}
 	
