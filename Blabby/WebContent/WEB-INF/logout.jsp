@@ -15,10 +15,7 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	
 	<!-- Custom styles for this template -->
-	<link href="styles/main.css" rel="stylesheet">
-	
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<link href="http://blabby.cloudapp.net:8080/styles/main.css" rel="stylesheet">
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -38,13 +35,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.jsp">MyBlabby</a>
+          <a class="navbar-brand" href="/page">MyBlabby</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="index.jsp">Home</a></li>
-            <li class="active"><a href="login.jsp">Login</a></li>
-            <li><a href="signup.jsp">Signup</a></li>
+            <li><a href="/page/main">Home</a></li>
+            <li class="active"><a href="/page/logout">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -53,13 +49,9 @@
     <!-- Begin page content -->
     <div class="container">
 	  <div class="page-header">
-        <h1>Log in to myBlabby</h1>
+        <h1>Thanks for using myBlabby</h1>
       </div>
-      <form action="/user/login" class="form-signin" method="POST">
-        <input name="username" type="text" class="form-control formTop" placeholder="Username" required autofocus>
-        <input name="password" type="password" class="form-control formBottom" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+      	<div id="alert" class="alert"></div>
     </div>
     <div id="footer">
       <div class="container">
@@ -73,5 +65,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://blabby.cloudapp.net:8080/js/logout.js"></script>
   </body>
 </html>

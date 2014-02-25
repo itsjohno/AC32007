@@ -1,5 +1,6 @@
 <!--  Check if user is logged in, if so - redirect them to their page (main.jsp) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="io.github.itsjohno.blabby.stores.UserStore" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +10,7 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Welcome</title>
+    <title>myBlabby - Main Page</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -39,9 +40,8 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/page">Home</a></li>
-            <li><a href="/page/login">Login</a></li>
-            <li><a href="/page/signup">Signup</a></li>
+            <li class="active"><a href="/page/main">Home</a></li>
+            <li><a href="/page/logout">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -49,10 +49,34 @@
 
     <!-- Begin page content -->
     <div class="container">
-      <div class="page-header">
-        <h1>Welcome to myBlabby!</h1>
-      </div>
-      <p class="lead">myBlabby is a Twitter clone built using Java and Cassandra. It runs on a Tomcat 7 server powered by Windows Azure. Fantastic!</p>
+    		<div class="page-header">
+		        <%
+		        UserStore us = (UserStore)session.getAttribute("user");
+		        if (us != null && us.getUsername() != null)
+		        {
+		        %>
+		        <h1>Welcome Back, <%= us.getUsername() %></h1>
+		        <%
+		        }
+		        else
+		        {
+		        %>
+		        <h1>Welcome Back</h1>
+		        <%
+		        }
+		        %>
+		    </div>
+		    <div class="row">
+		        <div class="col-md-5">
+		            <form>
+		            <textarea class="tweetBox form-control" rows="3">What's on your mind?</textarea>
+		            <button class="btn btn-lg btn-primary btn-block" type="submit">Tweet</button>
+		            </form>
+		        </div>
+		        <div class="col-md-5">
+		            Body content
+		        </div>
+	    	</div>
     </div>
     <div id="footer">
       <div class="container">

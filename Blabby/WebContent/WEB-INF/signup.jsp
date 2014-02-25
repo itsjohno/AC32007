@@ -9,7 +9,7 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Welcome</title>
+    <title>myBlabby - Sign Up</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -39,9 +39,9 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/page">Home</a></li>
+            <li><a href="/page">Home</a></li>
             <li><a href="/page/login">Login</a></li>
-            <li><a href="/page/signup">Signup</a></li>
+            <li class="active"><a href="/page/signup">Signup</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -50,9 +50,15 @@
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h1>Welcome to myBlabby!</h1>
+        <h1>Sign up to myBlabby</h1>
       </div>
-      <p class="lead">myBlabby is a Twitter clone built using Java and Cassandra. It runs on a Tomcat 7 server powered by Windows Azure. Fantastic!</p>
+      <form method="POST" class="form-signin" id="signUpForm">
+        <input name="username" type="text" class="form-control formTop" placeholder="Username" required autofocus>
+        <input name="password" type="password" class="form-control formMiddle" placeholder="Password" required>
+        <input name="password-confirm" type="password" class="form-control formMiddle" placeholder="Confirm Password" required>
+        <input name="email" type="email" class="form-control formBottom" placeholder="E-Mail Address" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+      </form>
     </div>
     <div id="footer">
       <div class="container">
@@ -66,5 +72,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://blabby.cloudapp.net:8080/js/signup.js"></script>
   </body>
 </html>

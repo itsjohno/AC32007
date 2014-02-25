@@ -9,16 +9,13 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Sign Up</title>
+    <title>myBlabby - Login</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	
 	<!-- Custom styles for this template -->
-	<link href="styles/main.css" rel="stylesheet">
-	
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<link href="http://blabby.cloudapp.net:8080/styles/main.css" rel="stylesheet">
 	
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -38,13 +35,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.jsp">MyBlabby</a>
+          <a class="navbar-brand" href="/page">MyBlabby</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="index.jsp">Home</a></li>
-            <li><a href="login.jsp">Login</a></li>
-            <li class="active"><a href="signup.jsp">Signup</a></li>
+            <li><a href="/page">Home</a></li>
+            <li class="active"><a href="/page/login">Login</a></li>
+            <li><a href="/page/signup">Signup</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -52,25 +49,21 @@
 
     <!-- Begin page content -->
     <div class="container">
-      <div class="page-header">
-        <h1>Sign up to myBlabby</h1>
+	  <div class="page-header">
+        <h1>Log in to myBlabby</h1>
       </div>
-      <form action="/user/register" class="form-signin" method="POST">
-        
-        <%
-	      if (request.getAttribute("error") != null)
-	      {
-	      %>
-	      	<div class="alert alert-danger"><%= request.getAttribute("error") %></div>
-	      <%
-	      }
-	    %>
-        
+      <form method="POST" class="form-signin" id="loginForm">
+      <%
+      if (request.getAttribute("error") != null)
+      {
+      %>
+      	<div id="alert" class="alert alert-danger"><%= request.getAttribute("error") %></div>
+      <%
+      }
+      %>
         <input name="username" type="text" class="form-control formTop" placeholder="Username" required autofocus>
-        <input name="password" type="password" class="form-control formMiddle" placeholder="Password" required>
-        <input name="password-confirm" type="password" class="form-control formMiddle" placeholder="Confirm Password" required>
-        <input name="email" type="email" class="form-control formBottom" placeholder="E-Mail Address" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+        <input name="password" type="password" class="form-control formBottom" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
     </div>
     <div id="footer">
@@ -85,5 +78,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://blabby.cloudapp.net:8080/js/login.js"></script>
   </body>
 </html>

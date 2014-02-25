@@ -84,3 +84,9 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.tweetBox
+{
+	resize: none;
+	margin-bottom: 20px;
+}

@@ -9,13 +9,13 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Main Page</title>
+    <title>myBlabby - 404</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	
 	<!-- Custom styles for this template -->
-	<link href="styles/main.css" rel="stylesheet">
+	<link href="http://blabby.cloudapp.net:8080/styles/main.css" rel="stylesheet">
 	
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -38,11 +38,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.jsp">MyBlabby</a>
+          <a class="navbar-brand" href="/page">MyBlabby</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="main.jsp">Home</a></li>
+            <li class="active"><a href="/page">Home</a></li>
+            <li><a href="/page/login">Login</a></li>
+            <li><a href="/page/signup">Signup</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -50,9 +52,10 @@
 
     <!-- Begin page content -->
     <div class="container">
-    		<div class="page-header">
-		        <h1>Welcome Back <% user.getUsername(); %></h1>
-		    </div>
+      <div class="page-header">
+        <h1>404 - Page Not Found</h1>
+      </div>
+      <p class="lead">The resource you requested (<%= request.getAttribute("url") %>) is not available</p>
     </div>
     <div id="footer">
       <div class="container">

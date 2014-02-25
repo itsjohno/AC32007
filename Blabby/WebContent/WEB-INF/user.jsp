@@ -1,5 +1,9 @@
 <!--  Check if user is logged in, if so - redirect them to their page (main.jsp) -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.*" %>
+<%@ page import="io.github.itsjohno.blabby.stores.TweetStore" %>
+<%@ page import="io.github.itsjohno.blabby.libraries.Helper" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +13,7 @@
     <meta name="description" content="myBlabby is a micro-blogging platform">
     <meta name="author" content="Johnathan Law">
 
-    <title>myBlabby - Welcome</title>
+    <title>myBlabby - <%= request.getAttribute("user") %></title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -25,6 +29,35 @@
 	  </head>
 	<body>
 
+	<%
+	if (session.getAttribute("user") != null)
+	{
+	%>
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/page">MyBlabby</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/page/main">Home</a></li>
+            <li><a href="/page/logout">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+	<%
+	}
+	else
+	{
+	%>
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -39,20 +72,45 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/page">Home</a></li>
-            <li><a href="/page/login">Login</a></li>
+            <li><a href="/page">Home</a></li>
+            <li class="active"><a href="/page/login">Login</a></li>
             <li><a href="/page/signup">Signup</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
+    <%
+	}
+    %>
 
     <!-- Begin page content -->
     <div class="container">
-      <div class="page-header">
-        <h1>Welcome to myBlabby!</h1>
-      </div>
-      <p class="lead">myBlabby is a Twitter clone built using Java and Cassandra. It runs on a Tomcat 7 server powered by Windows Azure. Fantastic!</p>
+	  <div class="page-header">
+        <h1><%= request.getAttribute("user") %>'s Page</h1>
+      </div>	
+		<%
+		List<TweetStore> lTweet = (List<TweetStore>)request.getAttribute("tweets");
+		if (lTweet==null)
+		{
+		 %>
+			<p>No Tweet found</p>
+		<% 
+		}
+		else
+		{
+			Iterator<TweetStore> iterator;
+	
+			iterator = lTweet.iterator();     
+			while (iterator.hasNext())
+			{
+				TweetStore ts = (TweetStore)iterator.next();
+			%>
+			<p>"<%=ts.getTweet() %>"<br/>
+			<span class="text-muted">- <%= Helper.getStringFromUUID(ts.getUUID()) %></span></p>
+			<%
+			}
+		}
+		%>
     </div>
     <div id="footer">
       <div class="container">

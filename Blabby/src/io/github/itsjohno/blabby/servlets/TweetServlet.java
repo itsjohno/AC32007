@@ -77,8 +77,20 @@ public class TweetServlet extends HttpServlet
 		
 		if (urlArgs.length == 2)
 		{
+			boolean uuid = false;
 			UserStore user = new UserStore(null, urlArgs[1], null, null, null);
-			if (uDAO.retrieve(user) == null)
+			
+			try
+			{
+				UUID.fromString(urlArgs[1]);
+				uuid = true;
+			}
+			catch (Exception e)
+			{
+				uuid = false;
+			}
+			
+			if (uDAO.retrieve(user) == null && uuid == true)
 			{
 				// Looks like we're trying to get a Tweet by UUID
 				System.out.println("Retrieve Tweet: " + urlArgs[1]);
@@ -105,7 +117,7 @@ public class TweetServlet extends HttpServlet
 					e.printStackTrace();
 				}
 			}
-			else
+			else if (uuid == false)
 			{
 				// Trying to get a Tweet by username are we?
 				try
@@ -142,6 +154,10 @@ public class TweetServlet extends HttpServlet
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 					e.printStackTrace();
 				}
+			}
+			else
+			{
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 		}
 		else

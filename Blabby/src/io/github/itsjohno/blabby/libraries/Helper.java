@@ -2,6 +2,8 @@ package io.github.itsjohno.blabby.libraries;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
 import java.net.URLDecoder;
 import java.util.UUID;
@@ -113,6 +115,19 @@ public class Helper
 	private static StringTokenizer SplitString(String str)
 	{
 	  		return new StringTokenizer (str,"/");
+	}
+	
+	/**
+	 * Converts a passed UUID into a Date object containing the time (related to the UUID)
+	 * @param uuid
+	 * @return Date object containing timestamp from UUID
+	 */
+	public static String getStringFromUUID(UUID uuid) 
+	{
+		DateFormat df = new SimpleDateFormat("h:mma dd/MM/yyyy");
+		
+	    long time = getTimeFromUUID(uuid);
+	    return df.format(new Date(time));
 	}
 	
 	/**

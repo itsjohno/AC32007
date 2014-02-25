@@ -1,11 +1,18 @@
 package io.github.itsjohno.blabby.servlets;
 
+import io.github.itsjohno.blabby.dao.TweetDAO;
 import io.github.itsjohno.blabby.dao.UserDAO;
+import io.github.itsjohno.blabby.stores.TweetStore;
 import io.github.itsjohno.blabby.stores.UserStore;
 import io.github.itsjohno.blabby.libraries.Helper;
+import io.github.itsjohno.blabby.libraries.PojoMapper;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.UUID;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -95,9 +102,10 @@ public class UserServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String[] urlArgs = Helper.SplitRequestPath(request);
 		
+		UserDAO uDAO = new UserDAO();
+		
 		if (urlArgs.length == 2 && urlArgs[1].equalsIgnoreCase("logout"))
 		{
-			UserDAO uDAO = new UserDAO();
 			UserStore user = (UserStore)session.getAttribute("user");
 			
 			if (user != null)
@@ -115,8 +123,34 @@ public class UserServlet extends HttpServlet {
 			}
 		}
 		else
-		{
-			// Attempt to find the user with the username held within urlArgs[1]
+		{	
+			UserStore user = uDAO.retrieve(new UserStore(null, urlArgs[1], null, null, null));
+			
+			if (user != null)
+			{
+				try
+				{
+					TweetDAO tDAO = new TweetDAO();
+					LinkedList<TweetStore> tweetList = tDAO.retrieve(user);
+					
+					request.setAttribute("tweets", tweetList);
+					request.setAttribute("user", user.getUsername());
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user.jsp");
+					
+					rd.forward(request, response);
+				}
+				catch (Exception e)
+				{
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/404.jsp");
+				request.setAttribute("url","/user/"+urlArgs[1]);
+				rd.forward(request, response);
+			}
 		}
 	}
 	
@@ -141,16 +175,27 @@ public class UserServlet extends HttpServlet {
 			}
 			else
 			{
+				System.out.println("Username: " + request.getParameter("username"));
+				System.out.println("Password: " + request.getParameter("password"));
+				System.out.println("HPass: " + hPass);
+				
 				UserStore userStore = uDAO.retrieve(new UserStore(null, request.getParameter("username"), null, null, null));
 				
-				if (userStore.getPassword().equals(hPass))
+				if (userStore != null)
 				{
-					userStore.setSessionID(session.getId());
-					
-					uDAO.update(userStore);
-					
-					session.setAttribute("user", userStore);
-					response.sendError(HttpServletResponse.SC_OK);
+					if (userStore.getPassword().equals(hPass))
+					{
+						userStore.setSessionID(session.getId());
+						
+						uDAO.update(userStore);
+						
+						session.setAttribute("user", userStore);
+						response.sendError(HttpServletResponse.SC_OK);
+					}
+					else
+					{
+						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid credentials supplied");
+					}
 				}
 				else
 				{
